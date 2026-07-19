@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SkinVault by Chi — Curated Skincare for Melanin-Rich Skin</title>
+<meta property="og:site_name" content="SkinVault by Chi">
+<meta property="og:type" content="website">
+<meta name="description" content="Vetted skincare chosen for deeper skin tones and Nigerian weather. Shop serums, SPF, PDRN and more, delivered across Nigeria.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --obsidian:#1A1A1A;
+  --obsidian-2:#232120;
+  --gold:#C9A84C;
+  --gold-soft:#D8BC6E;
+  --ivory:#F5F1E8;
+  --ivory-2:#EDE7D9;
+  --paper:#FBF9F4;
+  --ink-on-light:#211E1A;
+  --muted-light:#6E6656;
+  --muted-dark:#A69D8A;
+  --hairline-dark:rgba(201,168,76,.28);
+  --hairline-light:rgba(33,30,26,.14);
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --mono:'DM Mono','SF Mono',monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--serif);background:var(--obsidian);color:var(--ivory);font-size:19px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+::selection{background:var(--gold);color:var(--obsidian)}
+
+.mono{font-family:var(--mono)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(20px,4vw,56px)}
+
+/* ── Announcement bar ─────────────────────────── */
+.announce{background:var(--gold);color:var(--obsidian);font-family:var(--mono);font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;text-align:center;padding:9px 16px}
+
+/* ── Nav ──────────────────────────────────────── */
+header{position:sticky;top:0;z-index:50;background:rgba(26,26,26,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--hairline-dark)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:74px}
+.brand{font-family:var(--serif);font-weight:600;font-size:23px;letter-spacing:.06em;color:var(--ivory)}
+.brand em{font-style:italic;font-weight:400;color:var(--gold)}
+.nav-links{display:flex;gap:34px;list-style:none}
+.nav-links a{font-family:var(--mono);font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted-dark);transition:color .25s}
+.nav-links a:hover{color:var(--gold)}
+.nav-utils{display:flex;gap:22px;font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase}
+.nav-utils a{color:var(--ivory)}
+.nav-utils .cart{color:var(--gold)}
+.nav-toggle{display:none;background:none;border:1px solid var(--hairline-dark);color:var(--ivory);font-family:var(--mono);font-size:11px;letter-spacing:.12em;padding:8px 14px;cursor:pointer}
+
+/* ── Buttons ──────────────────────────────────── */
+.btn{display:inline-block;font-family:var(--mono);font-size:12.5px;letter-spacing:.16em;text-transform:uppercase;padding:17px 34px;border:1px solid var(--gold);cursor:pointer;transition:all .3s;text-align:center}
+.btn-gold{background:var(--gold);color:var(--obsidian)}
+.btn-gold:hover{background:var(--gold-soft);border-color:var(--gold-soft)}
+.btn-ghost{background:transparent;color:var(--gold)}
+.btn-ghost:hover{background:rgba(201,168,76,.12)}
+.btn-dark{background:var(--obsidian);color:var(--ivory);border-color:var(--obsidian)}
+.btn-dark:hover{background:#2e2b28}
+.btn-outline-dark{background:transparent;color:var(--ink-on-light);border-color:var(--ink-on-light)}
+.btn-outline-dark:hover{background:var(--ink-on-light);color:var(--ivory)}
+
+/* ── Hero ─────────────────────────────────────── */
+.hero{position:relative;overflow:hidden;padding:clamp(70px,10vh,120px) 0 clamp(60px,8vh,100px);background:
+  radial-gradient(1000px 500px at 85% 15%, rgba(201,168,76,.10), transparent 60%),
+  radial-gradient(700px 420px at 5% 90%, rgba(201,168,76,.06), transparent 60%),
+  var(--obsidian)}
+.hero-grid{display:grid;grid-template-columns:1.35fr .9fr;gap:clamp(40px,6vw,90px);align-items:center}
+.eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:28px}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--gold)}
+.hero h1{font-size:clamp(46px,6.2vw,86px);line-height:1.02;font-weight:500;letter-spacing:-.01em}
+.hero h1 em{font-style:italic;color:var(--gold)}
+.hero .sub{margin:30px 0 40px;font-size:clamp(19px,1.6vw,23px);color:var(--muted-dark);max-width:560px;font-weight:400}
+.hero-ctas{display:flex;gap:18px;flex-wrap:wrap}
+
+/* Vault index — the signature panel */
+.vault-index{border:1px solid var(--hairline-dark);background:rgba(35,33,32,.55);padding:34px 34px 26px;position:relative}
+.vault-index::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,168,76,.12);pointer-events:none}
+.vi-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--hairline-dark);padding-bottom:16px;margin-bottom:6px}
+.vi-head span{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.vi-row{display:flex;justify-content:space-between;align-items:baseline;gap:14px;padding:13px 0;border-bottom:1px dashed rgba(201,168,76,.16);transition:padding-left .25s}
+.vi-row:last-child{border-bottom:0}
+.vi-row:hover{padding-left:8px}
+.vi-row .code{font-family:var(--mono);font-size:11px;color:var(--gold);letter-spacing:.08em;flex-shrink:0}
+.vi-row .label{font-size:19px;font-weight:500;flex:1}
+.vi-row .count{font-family:var(--mono);font-size:11px;color:var(--muted-dark);letter-spacing:.06em;flex-shrink:0}
+
+/* rotating seal */
+.seal{position:absolute;top:-46px;right:-46px;width:128px;height:128px;pointer-events:none}
+.seal svg{width:100%;height:100%;animation:spin 26s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.seal .seal-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--gold)}
+
+/* ── Trust bar ────────────────────────────────── */
+.trustbar{border-top:1px solid var(--hairline-dark);border-bottom:1px solid var(--hairline-dark);background:var(--obsidian-2)}
+.trust-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.trust-item{padding:26px 26px;border-left:1px solid var(--hairline-dark);font-size:16.5px;color:var(--muted-dark);line-height:1.45}
+.trust-item:first-child{border-left:0}
+.trust-item strong{display:block;color:var(--ivory);font-weight:600;font-size:17.5px;margin-bottom:3px}
+
+/* ── Section scaffolding ──────────────────────── */
+section{padding:clamp(72px,9vw,130px) 0}
+.sec-light{background:var(--paper);color:var(--ink-on-light)}
+.sec-ivory{background:var(--ivory-2);color:var(--ink-on-light)}
+.kicker{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin-bottom:22px;display:flex;align-items:center;gap:14px}
+.sec-light .kicker,.sec-ivory .kicker{color:#8a7638}
+.sec-dark .kicker{color:var(--gold)}
+.kicker::before{content:"";width:34px;height:1px;background:currentColor;opacity:.7}
+h2{font-size:clamp(34px,4vw,56px);line-height:1.08;font-weight:500;letter-spacing:-.005em;max-width:820px}
+h2 em{font-style:italic}
+.sec-light h2 em,.sec-ivory h2 em{color:#9a7f35}
+.sec-dark h2 em{color:var(--gold)}
+.lede{margin-top:24px;font-size:clamp(18px,1.5vw,21.5px);max-width:660px}
+.sec-light .lede,.sec-ivory .lede{color:var(--muted-light)}
+.sec-dark .lede{color:var(--muted-dark)}
+
+/* ── Why a vault ──────────────────────────────── */
+.why-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,90px);align-items:start}
+.why-copy p{color:var(--muted-light);font-size:20px;margin-top:26px}
+.why-copy p strong{color:var(--ink-on-light);font-weight:600}
+.inline-link{font-family:var(--mono);font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:#8a7638;display:inline-flex;align-items:center;gap:10px;margin-top:34px;border-bottom:1px solid #8a7638;padding-bottom:4px;transition:gap .25s}
+.inline-link:hover{gap:16px}
+.standard{border:1px solid var(--hairline-light);background:var(--paper);padding:8px 0}
+.std-row{display:flex;gap:22px;padding:24px 30px;border-bottom:1px solid var(--hairline-light);align-items:baseline}
+.std-row:last-child{border-bottom:0}
+.std-row .n{font-family:var(--mono);font-size:12px;color:#9a7f35;letter-spacing:.08em;flex-shrink:0;padding-top:4px}
+.std-row h4{font-size:20px;font-weight:600;margin-bottom:5px}
+.std-row p{font-size:16.5px;color:var(--muted-light)}
+
+/* ── Concern grid ─────────────────────────────── */
+.concern-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--hairline-dark);border:1px solid var(--hairline-dark);margin-top:56px}
+.concern-card{background:var(--obsidian);padding:40px 34px 36px;position:relative;transition:background .3s;display:flex;flex-direction:column;min-height:230px}
+.concern-card:hover{background:var(--obsidian-2)}
+.concern-card .code{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--gold);margin-bottom:auto}
+.concern-card h3{font-size:26px;font-weight:500;margin:26px 0 8px}
+.concern-card p{font-size:16.5px;color:var(--muted-dark)}
+.concern-card .go{position:absolute;top:34px;right:30px;font-family:var(--mono);color:var(--gold);font-size:15px;opacity:0;transform:translateX(-8px);transition:all .3s}
+.concern-card:hover .go{opacity:1;transform:none}
+.center-cta{text-align:center;margin-top:52px}
+
+/* ── PDRN band ────────────────────────────────── */
+.pdrn{background:linear-gradient(120deg,#201c15,#1A1A1A 55%);border-top:1px solid var(--hairline-dark);border-bottom:1px solid var(--hairline-dark)}
+.pdrn-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center}
+.pdrn-copy p{color:var(--muted-dark);font-size:20px;margin:26px 0 38px}
+.pdrn-brands{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:38px}
+.chip{font-family:var(--mono);font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;border:1px solid var(--hairline-dark);color:var(--muted-dark);padding:8px 16px}
+.pdrn-visual{border:1px solid var(--hairline-dark);padding:46px 42px;background:rgba(201,168,76,.05);text-align:center}
+.pdrn-visual .big{font-family:var(--serif);font-style:italic;font-size:clamp(56px,6vw,84px);color:var(--gold);line-height:1}
+.pdrn-visual .cap{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-dark);margin-top:18px}
+.pdrn-visual .rule{width:60px;height:1px;background:var(--gold);margin:26px auto}
+.pdrn-visual p{font-size:17px;color:var(--muted-dark)}
+
+/* ── Best sellers ─────────────────────────────── */
+.scroller{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,320px);gap:22px;overflow-x:auto;padding:52px 4px 22px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#c8bda0 transparent}
+.scroller::-webkit-scrollbar{height:6px}
+.scroller::-webkit-scrollbar-thumb{background:#c8bda0}
+.p-card{scroll-snap-align:start;background:#fff;border:1px solid var(--hairline-light);display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.p-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(33,30,26,.10)}
+.p-img{aspect-ratio:1/1;background:linear-gradient(150deg,#f6f2e9,#ece5d3);display:flex;align-items:center;justify-content:center;position:relative}
+.p-img .ph{font-family:var(--serif);font-style:italic;font-size:44px;color:#c9b98d}
+.p-img .p-photo{width:78%;height:78%;object-fit:contain;mix-blend-mode:multiply}
+.p-tag{position:absolute;top:14px;left:14px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;background:var(--obsidian);color:var(--gold);padding:5px 10px}
+.p-body{padding:22px 22px 24px;display:flex;flex-direction:column;flex:1}
+.p-body h4{font-size:19.5px;font-weight:600;line-height:1.25}
+.p-body .benefit{font-size:15.5px;color:var(--muted-light);margin:9px 0 18px;flex:1}
+.p-foot{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--hairline-light);padding-top:16px}
+.price{font-family:var(--mono);font-size:15px;letter-spacing:.02em;color:var(--ink-on-light)}
+.add{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#9a7f35;border-bottom:1px solid #9a7f35;padding-bottom:2px;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;transition:color .2s}
+.add:hover{color:var(--ink-on-light);border-color:var(--ink-on-light)}
+.note-caution{font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:#a08340;margin-top:10px}
+
+/* ── Bundles ──────────────────────────────────── */
+.tier-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:56px}
+.tier{border:1px solid var(--hairline-light);background:#fff;padding:40px 36px;display:flex;flex-direction:column;position:relative}
+.tier.feature{border-color:var(--obsidian);background:var(--obsidian);color:var(--ivory)}
+.tier .t-kick{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#9a7f35;margin-bottom:18px}
+.tier.feature .t-kick{color:var(--gold)}
+.tier h3{font-size:27px;font-weight:600}
+.tier .t-sub{font-size:16px;color:var(--muted-light);margin:6px 0 26px}
+.tier.feature .t-sub{color:var(--muted-dark)}
+.tier ul{list-style:none;margin-bottom:30px;flex:1}
+.tier li{font-size:16.5px;padding:10px 0;border-bottom:1px dashed var(--hairline-light);display:flex;gap:12px}
+.tier.feature li{border-color:rgba(201,168,76,.2)}
+.tier li::before{content:"—";color:#9a7f35;flex-shrink:0}
+.tier.feature li::before{color:var(--gold)}
+.tier .t-price{font-family:var(--mono);font-size:14px;color:var(--muted-light);margin-bottom:22px}
+.tier.feature .t-price{color:var(--muted-dark)}
+.tier .t-price strong{color:var(--ink-on-light);font-size:17px;font-weight:500}
+.tier.feature .t-price strong{color:var(--gold)}
+.badge-best{position:absolute;top:-13px;left:36px;font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;background:var(--gold);color:var(--obsidian);padding:6px 14px}
+.tier li{justify-content:space-between;align-items:baseline}
+.tier li .li-price{font-family:var(--mono);font-size:12.5px;color:var(--muted-light);margin-left:auto;padding-left:12px;flex-shrink:0}
+.tier.feature li .li-price{color:var(--muted-dark)}
+.t-math{border-top:1px solid var(--hairline-light);padding-top:16px;margin-bottom:22px}
+.tier.feature .t-math{border-color:rgba(201,168,76,.25)}
+.tm-row{display:flex;justify-content:space-between;font-family:var(--mono);font-size:13px;letter-spacing:.02em;padding:5px 0;color:var(--muted-light)}
+.tier.feature .tm-row{color:var(--muted-dark)}
+.tm-row .strike{text-decoration:line-through;opacity:.75}
+.tm-row .tm-price{font-size:16px;color:var(--ink-on-light)}
+.tier.feature .tm-row .tm-price{color:var(--ivory)}
+.tm-row.save{color:#9a7f35;font-weight:500}
+.tier.feature .tm-row.save{color:var(--gold)}
+.t-caution{font-family:var(--mono);font-size:10.5px;letter-spacing:.05em;color:#a08340;margin:-8px 0 20px}
+.tier.feature .t-caution{color:var(--gold-soft)}
+/* WhatsApp floating action */
+.wa-fab{position:fixed;right:22px;bottom:22px;z-index:60;display:flex;align-items:center;gap:10px;background:var(--obsidian);border:1px solid var(--gold);color:var(--gold);font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;padding:13px 20px;transition:background .25s;box-shadow:0 10px 28px rgba(0,0,0,.35)}
+.wa-fab:hover{background:#2a2723}
+.wa-fab svg{width:17px;height:17px;fill:var(--gold)}
+
+/* ── Beauty from within ───────────────────────── */
+.bfw{background:var(--obsidian);border-top:1px solid var(--hairline-dark)}
+.bfw-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(40px,6vw,90px);align-items:center}
+.reg-badge{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);border:1px solid var(--hairline-dark);padding:9px 18px;margin-bottom:28px}
+.reg-badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.bfw p.body{color:var(--muted-dark);font-size:20px;margin:24px 0 20px}
+.bfw .promise{font-style:italic;color:var(--muted-dark);font-size:17.5px;border-left:2px solid var(--gold);padding-left:22px;margin:30px 0 38px}
+.capture{display:flex;max-width:520px}
+.capture input{flex:1;background:transparent;border:1px solid var(--hairline-dark);border-right:0;color:var(--ivory);font-family:var(--mono);font-size:14px;padding:0 20px;min-width:0}
+.capture input::placeholder{color:var(--muted-dark)}
+.capture .btn{white-space:nowrap}
+.micro{font-family:var(--mono);font-size:11.5px;color:var(--muted-dark);letter-spacing:.04em;margin-top:14px}
+.bfw-list{border:1px solid var(--hairline-dark)}
+.bfw-item{display:flex;justify-content:space-between;gap:20px;align-items:baseline;padding:20px 28px;border-bottom:1px solid var(--hairline-dark)}
+.bfw-item:last-child{border-bottom:0}
+.bfw-item .nm{font-size:18.5px;font-weight:500}
+.bfw-item .ds{font-size:15px;color:var(--muted-dark)}
+.bfw-item .st{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);flex-shrink:0}
+
+/* ── Founder ──────────────────────────────────── */
+.founder{background:var(--ivory-2);color:var(--ink-on-light);text-align:center}
+.founder blockquote{font-size:clamp(28px,3.4vw,44px);font-weight:500;font-style:italic;line-height:1.25;max-width:880px;margin:0 auto}
+.founder blockquote em{color:#9a7f35}
+.founder .who{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted-light);margin-top:34px}
+
+/* ── Journal ──────────────────────────────────── */
+.j-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:56px}
+.j-card{border:1px solid var(--hairline-light);background:#fff;padding:36px 32px;display:flex;flex-direction:column;transition:transform .3s,box-shadow .3s}
+.j-card:hover{transform:translateY(-5px);box-shadow:0 18px 40px rgba(33,30,26,.09)}
+.j-chip{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#9a7f35;margin-bottom:20px}
+.j-card h3{font-size:23px;font-weight:600;line-height:1.28;flex:1}
+.j-card p{font-size:16px;color:var(--muted-light);margin:14px 0 26px}
+.j-card .inline-link{margin-top:0}
+
+/* ── Footer band + footer ─────────────────────── */
+.foot-band{background:var(--obsidian);border-top:1px solid var(--hairline-dark);text-align:center}
+.foot-band h2{margin:0 auto}
+.foot-band .lede{margin-left:auto;margin-right:auto}
+.foot-band .capture{margin:44px auto 0}
+footer{background:#141312;border-top:1px solid var(--hairline-dark);padding:70px 0 40px;font-size:16px}
+.f-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:44px}
+.f-brand p{color:var(--muted-dark);margin-top:14px;max-width:280px;font-size:16.5px}
+.f-col h5{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;font-weight:500}
+.f-col ul{list-style:none}
+.f-col li{margin-bottom:11px}
+.f-col a{color:var(--muted-dark);transition:color .2s;font-size:16.5px}
+.f-col a:hover{color:var(--ivory)}
+.f-legal{border-top:1px solid var(--hairline-dark);margin-top:56px;padding-top:28px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--muted-dark)}
+
+/* ── Reveal on scroll ─────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  .seal svg{animation:none}
+  .reg-badge .dot{animation:none}
+  html{scroll-behavior:auto}
+}
+
+/* ── Responsive ───────────────────────────────── */
+@media (max-width:1024px){
+  .nav-links{display:none}
+  .nav-toggle{display:block}
+  .hero-grid,.pdrn-grid,.bfw-grid,.why-grid{grid-template-columns:1fr}
+  .concern-grid{grid-template-columns:1fr 1fr}
+  .tier-grid,.j-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr 1fr}
+  .trust-item:nth-child(3){border-left:0}
+  .trust-item:nth-child(n+3){border-top:1px solid var(--hairline-dark)}
+  .f-grid{grid-template-columns:1fr 1fr}
+  .seal{top:-30px;right:6px;width:100px;height:100px}
+}
+@media (max-width:600px){
+  body{font-size:17.5px}
+  .hero{padding:44px 0 40px}
+  .hero h1{font-size:42px}
+  .hero .sub{margin:20px 0 26px;font-size:18px}
+  .vault-index{display:none}
+  .concern-grid{grid-template-columns:1fr}
+  .trust-grid{grid-template-columns:1fr}
+  .trust-item{border-left:0;border-top:1px solid var(--hairline-dark)}
+  .trust-item:first-child{border-top:0}
+  .capture{flex-direction:column}
+  .capture input{border-right:1px solid var(--hairline-dark);padding:16px 20px}
+  .f-grid{grid-template-columns:1fr}
+  .hero-ctas .btn{width:100%}
+}
+
+/* ── Multi-page additions ─────────────────────── */
+.nav-links a.on{color:var(--gold)}
+.page-hero{background:radial-gradient(900px 420px at 80% 10%, rgba(201,168,76,.10), transparent 60%),var(--obsidian);padding:clamp(60px,8vh,100px) 0;border-bottom:1px solid var(--hairline-dark)}
+.page-hero h1{font-size:clamp(42px,5.4vw,72px);line-height:1.04;font-weight:500}
+.page-hero h1 em{font-style:italic;color:var(--gold)}
+.page-hero .lede{color:var(--muted-dark)}
+.gold-link{color:var(--gold);border-bottom:1px solid var(--gold)}
+.sec-light .gold-link{color:#8a7638;border-color:#8a7638}
+/* shop */
+.shop-sec{padding-top:48px}
+.filterbar{display:flex;gap:14px;flex-wrap:wrap;align-items:center;position:sticky;top:74px;z-index:40;background:var(--paper);padding:18px 0;border-bottom:1px solid var(--hairline-light)}
+.filterbar input[type=search]{flex:2;min-width:220px;font-family:var(--mono);font-size:13.5px;padding:13px 18px;border:1px solid var(--hairline-light);background:#fff;color:var(--ink-on-light)}
+.filterbar select{font-family:var(--mono);font-size:12.5px;padding:13px 14px;border:1px solid var(--hairline-light);background:#fff;color:var(--ink-on-light)}
+.f-count{font-size:11.5px;color:var(--muted-light);letter-spacing:.08em;margin-left:auto}
+.shop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;margin-top:34px}
+.empty{color:var(--muted-light);font-size:13px;text-align:center;padding:60px 0}
+.price.tbc{font-size:11.5px;color:var(--muted-light);letter-spacing:.04em}
+/* concerns */
+.cb-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(40px,6vw,90px);align-items:start}
+.concern-block{padding:clamp(60px,7vw,100px) 0}
+.ing-label{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin:30px 0 14px}
+.sec-light .ing-label{color:#8a7638}
+.routine{border:1px solid var(--hairline-dark);margin-bottom:30px}
+.sec-light .routine{border-color:var(--hairline-light);background:#fff}
+.r-head{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);padding:16px 24px;border-bottom:1px solid var(--hairline-dark)}
+.sec-light .r-head{color:#8a7638;border-color:var(--hairline-light)}
+.r-row{display:flex;gap:18px;padding:16px 24px;border-bottom:1px dashed rgba(201,168,76,.16);font-size:16.5px}
+.sec-light .r-row{border-color:var(--hairline-light);color:var(--muted-light)}
+.r-row:last-child{border-bottom:0}
+.r-t{font-size:11px;letter-spacing:.14em;color:var(--gold);flex-shrink:0;padding-top:4px}
+.sec-light .r-t{color:#8a7638}
+/* bundles */
+.bundles-sec{padding-top:56px}
+.b-group{margin-bottom:64px}
+.b-concern{margin-bottom:8px}
+.b-code{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:#8a7638}
+.b-group .tier-grid{margin-top:24px}
+/* contact */
+.c-form{display:flex;flex-direction:column;gap:18px}
+.c-form label{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted-light);display:flex;flex-direction:column;gap:8px}
+.c-form input,.c-form textarea{font-family:var(--serif);font-size:17px;padding:13px 16px;border:1px solid var(--hairline-light);background:#fff;color:var(--ink-on-light)}
+.faq-wrap{max-width:820px;margin-top:44px}
+.faq-group{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:#8a7638;margin:44px 0 16px;font-weight:500}
+.faq-item{border:1px solid var(--hairline-light);background:#fff;margin-bottom:10px}
+.faq-item summary{cursor:pointer;padding:20px 24px;font-size:20px;font-weight:600;list-style:none;position:relative}
+.faq-item summary::after{content:"+";position:absolute;right:24px;font-family:var(--mono);color:#8a7638}
+.faq-item[open] summary::after{content:"–"}
+.faq-item p{padding:0 24px 22px;color:var(--muted-light);font-size:17.5px;line-height:1.6}
+.fill{border-bottom:1px dotted #a08340;color:#a08340}
+@media (max-width:1024px){.shop-grid{grid-template-columns:repeat(2,1fr)}.cb-grid{grid-template-columns:1fr}}
+@media (max-width:600px){.shop-grid{grid-template-columns:1fr}.filterbar{position:static}}
+
+/* ── Review-pass refinements ──────────────────── */
+.skip-link{position:absolute;left:-9999px;top:0;background:var(--gold);color:var(--obsidian);font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding:12px 20px;z-index:100}
+.skip-link:focus{left:0}
+.b-concern{font-family:var(--serif);font-size:clamp(26px,3vw,38px);font-weight:500;color:var(--ink-on-light);border-bottom:1px solid var(--hairline-light);padding-bottom:14px}
+.t-inherit{font-size:15px;color:var(--muted-light);margin-bottom:10px}
+.tier.feature .t-inherit{color:var(--muted-dark)}
+.faq-item summary::-webkit-details-marker{display:none}
+/* demo cart toast */
+.toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%) translateY(20px);background:var(--obsidian);color:var(--ivory);border:1px solid var(--gold);font-family:var(--mono);font-size:12px;letter-spacing:.1em;padding:13px 24px;opacity:0;pointer-events:none;transition:all .35s;z-index:90}
+.toast.show{opacity:1;transform:translateX(-50%)}
+@media (prefers-reduced-motion:reduce){.toast{transition:opacity .2s}}
+
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="announce">Delivered across Nigeria &nbsp;·&nbsp; 358 products, each one vetted before it earns a place</div>
+
+<header>
+  <div class="wrap nav">
+    <a href="#" class="brand">SKINVAULT <em>by Chi</em></a>
+    <ul class="nav-links">
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="concerns.html">By Concern</a></li>
+      <li><a href="bundles.html">Bundles</a></li>
+      <li><a href="beauty-from-within.html">Beauty from Within</a></li>
+      <li><a href="journal.html">Journal</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="nav-utils">
+      <a href="shop.html">Search</a>
+      <a href="#" class="cart">Cart (0)</a>
+    </div>
+    <button class="nav-toggle" aria-label="Open menu">Menu</button>
+  </div>
+</header>
+
+<main id="main">
+<!-- HERO -->
+<section class="hero sec-dark">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Curated skincare · Melanin-rich skin</div>
+      <h1>Skincare chosen for skin <em>like yours.</em></h1>
+      <p class="sub">A curated vault of the products that actually work on melanin-rich skin — vetted for ingredients, sold without the guesswork.</p>
+      <div class="hero-ctas">
+        <a class="btn btn-gold" href="shop.html" data-event="hero_shop_vault">Shop the vault</a>
+        <a class="btn btn-ghost" href="concerns.html" data-event="hero_find_routine">Find my routine</a>
+      </div>
+    </div>
+    <div class="vault-index reveal" aria-label="The vault at a glance">
+      <div class="seal" aria-hidden="true">
+        <svg viewBox="0 0 128 128">
+          <defs><path id="circ" d="M64,64 m-50,0 a50,50 0 1,1 100,0 a50,50 0 1,1 -100,0"/></defs>
+          <text fill="#C9A84C" font-family="DM Mono,monospace" font-size="10.5" letter-spacing="2.5">
+            <textPath href="#circ">VETTED FOR MELANIN-RICH SKIN · SKINVAULT STANDARD ·</textPath>
+          </text>
+        </svg>
+        <div class="seal-center">Ch</div>
+      </div>
+      <div class="vi-head"><span>The Vault Index</span><span>358 SKUs</span></div>
+      <div class="vi-row"><span class="code">V—01</span><span class="label">Serums &amp; essences</span><span class="count">76 products</span></div>
+      <div class="vi-row"><span class="code">V—02</span><span class="label">Body care</span><span class="count">59 products</span></div>
+      <div class="vi-row"><span class="code">V—03</span><span class="label">Moisturisers &amp; creams</span><span class="count">46 products</span></div>
+      <div class="vi-row"><span class="code">V—04</span><span class="label">Cleansers</span><span class="count">37 products</span></div>
+      <div class="vi-row"><span class="code">V—05</span><span class="label">SPF &amp; sunscreens</span><span class="count">21 products</span></div>
+      <div class="vi-row"><span class="code">V—06</span><span class="label">Toners, treatments &amp; more</span><span class="count">119 products</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trustbar">
+  <div class="wrap trust-grid">
+    <div class="trust-item"><strong>358 products</strong>each one vetted before it earns a place</div>
+    <div class="trust-item"><strong>Chosen for deep skin tones</strong>and Nigerian weather</div>
+    <div class="trust-item"><strong>Ingredient-led</strong>we tell you what’s inside and why</div>
+    <div class="trust-item"><strong>Order online</strong>delivered across Nigeria</div>
+  </div>
+</div>
+
+<!-- WHY A VAULT -->
+<section class="sec-light" id="about">
+  <div class="wrap why-grid">
+    <div class="why-copy reveal">
+      <div class="kicker">Why a vault</div>
+      <h2>The internet has ten thousand products. <em>You need about twelve.</em></h2>
+      <p>Most skincare fails melanin-rich skin in the same few ways — it fades unevenly, it triggers dark marks that outlast the breakout, or it was simply never tested on tones like ours. SkinVault exists to end the trial-and-error.</p>
+      <p>Every product here has been chosen for how it behaves on deeper skin, in real heat and humidity, at prices that make sense in naira. <strong>You’re not buying more. You’re buying the right ones.</strong></p>
+      <a class="inline-link" href="about.html#standard">Read our vetting standard <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="standard reveal" id="standard" aria-label="The four-question vetting standard">
+      <div class="std-row"><span class="n">Q.1</span><div><h4>Does it respect melanin-rich skin?</h4><p>We favour ingredients with a track record on deeper tones — niacinamide, tranexamic acid, azelaic acid, vitamin C, gentle retinoids — and flag the ones that need care.</p></div></div>
+      <div class="std-row"><span class="n">Q.2</span><div><h4>Does the ingredient list earn the price?</h4><p>We read the formula, not the marketing. A serum earns its naira on what’s inside, not on the box.</p></div></div>
+      <div class="std-row"><span class="n">Q.3</span><div><h4>Will it survive Nigerian weather?</h4><p>Texture, finish and stability in heat and humidity are part of the test. A cream that pills at 32 degrees doesn’t make it.</p></div></div>
+      <div class="std-row"><span class="n">Q.4</span><div><h4>Can we explain it in one honest sentence?</h4><p>If we can’t tell you plainly what a product does and who it’s for, it doesn’t belong here.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SHOP BY CONCERN -->
+<section class="sec-dark" id="concern">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Shop by concern</div>
+      <h2>Tell us what’s going on. <em>We’ll show you what works.</em></h2>
+      <p class="lede">Most people don’t shop by category — they shop by problem. Pick yours and we’ll walk you to the products worth your money, in the order to use them.</p>
+    </div>
+    <div class="concern-grid reveal">
+      <a class="concern-card" href="#"><span class="code">C—01</span><span class="go" aria-hidden="true">→</span><h3>Dark spots &amp; uneven tone</h3><p>Fade what’s left behind, evenly.</p></a>
+      <a class="concern-card" href="#"><span class="code">C—02</span><span class="go" aria-hidden="true">→</span><h3>Dryness &amp; barrier</h3><p>Hydration that lasts past noon.</p></a>
+      <a class="concern-card" href="#"><span class="code">C—03</span><span class="go" aria-hidden="true">→</span><h3>Acne &amp; breakouts</h3><p>Clear without the aftermath.</p></a>
+      <a class="concern-card" href="#"><span class="code">C—04</span><span class="go" aria-hidden="true">→</span><h3>Dullness &amp; glow</h3><p>Bring the light back up.</p></a>
+      <a class="concern-card" href="#"><span class="code">C—05</span><span class="go" aria-hidden="true">→</span><h3>Ageing &amp; firmness</h3><p>Keep the bounce, slow the lines.</p></a>
+      <a class="concern-card" href="#"><span class="code">C—06</span><span class="go" aria-hidden="true">→</span><h3>Sensitivity &amp; redness</h3><p>Calm skin that reacts to everything.</p></a>
+    </div>
+    <div class="center-cta"><a class="btn btn-ghost" href="concerns.html">See all concerns</a></div>
+  </div>
+</section>
+
+<!-- PDRN EDIT -->
+<section class="pdrn sec-dark">
+  <div class="wrap pdrn-grid">
+    <div class="pdrn-copy reveal">
+      <div class="kicker">Featured · The PDRN edit</div>
+      <h2>The repair ingredient <em>everyone’s asking for</em></h2>
+      <p>PDRN — polydeoxyribonucleotide — is the salmon-derived active behind Korea’s glass-skin moment. We’ve gathered the range worth having: capsule creams, essences, peptide serums and toners, in one place. Start with a serum, build from there.</p>
+      <div class="pdrn-brands">
+        <span class="chip">Medicube</span><span class="chip">Anua</span><span class="chip">VT</span><span class="chip">Numbuzin</span>
+      </div>
+      <a class="btn btn-gold" href="shop.html?q=pdrn">Shop the PDRN edit</a>
+    </div>
+    <div class="pdrn-visual reveal" aria-hidden="true">
+      <div class="big">PDRN</div>
+      <div class="cap">Polydeoxyribonucleotide</div>
+      <div class="rule"></div>
+      <p>Repair · bounce · glow — the K-beauty shelf, curated down to the pieces that earn their place.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BEST SELLERS -->
+<section class="sec-light" id="shop">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Best sellers</div>
+      <h2>The shelf people <em>come back for</em></h2>
+      <p class="lede">Real products, real naira prices — every one already vetted, so the only decision left is yours.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="scroller reveal" aria-label="Best-selling products">
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Best seller</span><img class="p-photo" src="assets/products/la-roche-posay-pure-vitamin-c10-serum.jpg" alt="La Roche-Posay Pure Vitamin C10 Serum" loading="lazy" data-remote="https://www.laroche-posay.us/dw/image/v2/AANG_PRD/on/demandware.static/-/Sites-acd-laroche-posay-master-catalog/default/dw85a71660/img/3337875660570/LaRochePosay-Product-Skincare-PureVitaminC12-30ml-3337875909235-PackshotFront-shadow-1500x1500-Rev.jpg" onerror="if(this.dataset.remote&&!this.dataset.r){this.dataset.r=1;this.src=this.dataset.remote}else{this.style.display='none';this.nextElementSibling.style.display='block'}"><span class="ph" style="display:none">LRP</span></div>
+        <div class="p-body">
+          <h4>La Roche-Posay Pure Vitamin C10 Serum</h4>
+          <p class="benefit">10% vitamin C for brightness sensitive skin can handle.</p>
+          <div class="p-foot"><span class="price">₦60,000</span><button class="add">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">PDRN edit</span><img class="p-photo" src="assets/products/anua-100-pdrn-hyaluronic-toner.jpg" alt="Anua 100+ PDRN Hyaluronic Toner" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">An</span></div>
+        <div class="p-body">
+          <h4>Anua 100+ PDRN Hyaluronic Toner</h4>
+          <p class="benefit">PDRN and multi-depth hyaluronic hydration for skin that wants its bounce back.</p>
+          <div class="p-foot"><span class="price">₦25,000</span><button class="add">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Dark spots</span><img class="p-photo" src="assets/products/medicube-txa-niacinamide-serum.jpg" alt="Medicube TXA Niacinamide Serum" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">Md</span></div>
+        <div class="p-body">
+          <h4>Medicube TXA Niacinamide Serum</h4>
+          <p class="benefit">Tranexamic acid and niacinamide for stubborn marks and uneven tone.</p>
+          <div class="p-foot"><span class="price">₦20,000</span><button class="add">Add to cart</button></div>
+          <p class="note-caution">Pair with daily SPF</p>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">No grey cast</span><img class="p-photo" src="assets/products/beauty-of-joseon-relief-sun-rice-probiotics-spf50-pa.jpg" alt="Beauty of Joseon Relief Sun SPF 50+ PA++++" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">BoJ</span></div>
+        <div class="p-body">
+          <h4>Beauty of Joseon Relief Sun SPF 50+ PA++++</h4>
+          <p class="benefit">Rice and probiotics sunscreen that wears clean on deeper tones.</p>
+          <div class="p-foot"><span class="price">₦20,000</span><button class="add">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Beginner-friendly</span><img class="p-photo" src="assets/products/skin1004-madagascar-centella-toner.jpg" alt="SKIN1004 Madagascar Centella Toner" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">S4</span></div>
+        <div class="p-body">
+          <h4>SKIN1004 Madagascar Centella Toner</h4>
+          <p class="benefit">Centella calms reactive skin and preps it for everything after.</p>
+          <div class="p-foot"><span class="price">₦17,000</span><button class="add">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Deep tones first</span><img class="p-photo" src="assets/products/urban-skin-rx-super-c-serum.jpg" alt="Urban Skin RX Super C Serum" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">UR</span></div>
+        <div class="p-body">
+          <h4>Urban Skin RX Super C Serum</h4>
+          <p class="benefit">Vitamin C, niacinamide and kojic acid — made with dark skin tones in mind.</p>
+          <div class="p-foot"><span class="price">₦55,000</span><button class="add">Add to cart</button></div>
+          <p class="note-caution">Pair with daily SPF</p>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Glow</span><img class="p-photo" src="assets/products/numbuzin-no-5-glutathione-brightening-serum.jpg" alt="Numbuzin No.5+ Glutathione Brightening Serum" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">Nb</span></div>
+        <div class="p-body">
+          <h4>Numbuzin No.5+ Glutathione Brightening Serum</h4>
+          <p class="benefit">Glutathione and vitamin C for dullness that needs its light back.</p>
+          <div class="p-foot"><span class="price">₦25,000</span><button class="add">Add to cart</button></div>
+        </div>
+      </article>
+      <article class="p-card">
+        <div class="p-img"><span class="p-tag">Advanced</span><img class="p-photo" src="assets/products/la-roche-posay-pure-retinol-serum.jpg" alt="La Roche-Posay Pure Retinol Serum" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><span class="ph" style="display:none">LRP</span></div>
+        <div class="p-body">
+          <h4>La Roche-Posay Pure Retinol Serum</h4>
+          <p class="benefit">Pure retinol for texture and fine lines — introduce slowly.</p>
+          <div class="p-foot"><span class="price">₦60,000</span><button class="add">Add to cart</button></div>
+          <p class="note-caution">Introduce slowly · pair with SPF</p>
+        </div>
+      </article>
+    </div>
+    <div class="center-cta"><a class="btn btn-outline-dark" href="shop.html">Shop all 358 products</a></div>
+  </div>
+</section>
+
+<!-- BUNDLES -->
+<section class="sec-ivory" id="bundles">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">Bundles &amp; routines</div>
+      <h2>Routines, <em>already built.</em></h2>
+      <p class="lede">We’ve done the pairing for you — complete routines for your main concern, at a better price than buying each piece alone. Every concern comes in three levels, so you can start where your skin and budget are.</p>
+    </div>
+    <div class="tier-grid reveal">
+      <div class="tier">
+        <div class="t-kick">Basic · The essentials</div>
+        <h3>Glow Starter Kit</h3>
+        <p class="t-sub">For dark spots &amp; pigmentation — where fading starts.</p>
+        <ul>
+          <li>CeraVe Acne Control Cleanser <span class="li-price">₦20,000</span></li>
+          <li>Jumiso All Day Vitamin C Serum <span class="li-price">₦20,000</span></li>
+          <li>La Roche-Posay Anthelios SPF 50+ <span class="li-price">₦32,000</span></li>
+        </ul>
+        <div class="t-math">
+          <div class="tm-row"><span>Bought separately</span><span class="strike">₦72,000</span></div>
+          <div class="tm-row"><span>Bundle price</span><span class="tm-price">₦63,000</span></div>
+          <div class="tm-row save"><span>You save</span><span>₦9,000</span></div>
+        </div>
+        <a class="btn btn-outline-dark" href="#" data-event="bundle_glow_starter">Buy the bundle</a>
+      </div>
+      <div class="tier feature">
+        <span class="badge-best">Best seller</span>
+        <div class="t-kick">Complete · The full routine</div>
+        <h3>Clear Skin System</h3>
+        <p class="t-sub">For acne &amp; breakouts — the full routine, marks included.</p>
+        <ul>
+          <li>CeraVe Acne Control Cleanser <span class="li-price">₦20,000</span></li>
+          <li>Ezanic Azelaic Acid 20% Cream <span class="li-price">₦12,000</span></li>
+          <li>The Ordinary Glycolic Acid 7% <span class="li-price">₦38,000</span></li>
+          <li>Seoul 1988 Cream Retinol <span class="li-price">₦25,000</span></li>
+          <li>La Roche-Posay Anthelios SPF 50+ <span class="li-price">₦32,000</span></li>
+        </ul>
+        <div class="t-math">
+          <div class="tm-row"><span>Bought separately</span><span class="strike">₦127,000</span></div>
+          <div class="tm-row"><span>Bundle price</span><span class="tm-price">₦108,000</span></div>
+          <div class="tm-row save"><span>You save</span><span>₦19,000</span></div>
+        </div>
+        <p class="t-caution">Retinol and acids included — introduce slowly · pair with the SPF</p>
+        <a class="btn btn-gold" href="#" data-event="bundle_clear_skin">Buy the bundle</a>
+      </div>
+      <div class="tier">
+        <div class="t-kick">Pro · The advanced routine</div>
+        <h3>Age Defense System</h3>
+        <p class="t-sub">For ageing &amp; firmness — the long game, started early.</p>
+        <ul>
+          <li>La Roche-Posay Pure Retinol Serum <span class="li-price">₦60,000</span></li>
+          <li>Seoul 1988 Cream Retinol <span class="li-price">₦25,000</span></li>
+          <li>Naturium The Glow Getter Serum <span class="li-price">₦70,000</span></li>
+          <li>La Roche-Posay Anthelios SPF 50+ <span class="li-price">₦32,000</span></li>
+        </ul>
+        <div class="t-math">
+          <div class="tm-row"><span>Bought separately</span><span class="strike">₦187,000</span></div>
+          <div class="tm-row"><span>Bundle price</span><span class="tm-price">₦159,000</span></div>
+          <div class="tm-row save"><span>You save</span><span>₦28,000</span></div>
+        </div>
+        <p class="t-caution">Introduce retinol slowly · pair with the SPF</p>
+        <a class="btn btn-outline-dark" href="#" data-event="bundle_age_defense">Buy the bundle</a>
+      </div>
+    </div>
+    <div class="center-cta">
+      <a class="btn btn-dark" href="bundles.html">See all 27 bundles</a>
+      &nbsp;&nbsp;
+      <a class="inline-link" href="contact.html">Build my custom routine <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- BEAUTY FROM WITHIN -->
+<section class="bfw sec-dark" id="within">
+  <div class="wrap bfw-grid">
+    <div class="reveal">
+      <div class="reg-badge"><span class="dot" aria-hidden="true"></span> Registration in progress</div>
+      <div class="kicker">Beauty from within</div>
+      <h2>Glow is built <em>inside out,</em> too</h2>
+      <p class="body">Marine collagen, liposomal vitamin C and wellness formulas — chosen with the same eye we bring to the shelf. Our ingestible range is in final registration; join the list and you’ll be first to know the day it goes live.</p>
+      <p class="promise">We could list these today. We’re not going to. Anything you swallow deserves to clear proper registration first — and we’d rather you trust everything on this site than rush one shelf.</p>
+      <form class="capture" onsubmit="event.preventDefault();this.querySelector('input').value='';this.nextElementSibling.textContent='You’re on the list — one email, the day it goes live.'">
+        <input type="email" required placeholder="Email address" aria-label="Email address">
+        <button class="btn btn-gold" type="submit">Notify me at launch</button>
+      </form>
+      <p class="micro">We’ll email you once — the day it’s live. Nothing else.</p>
+    </div>
+    <div class="bfw-list reveal" aria-label="Beauty from within range preview">
+      <div class="bfw-item"><div><div class="nm">YOUR Zooki Collagen — Sour Cherry, 11,000mg</div><div class="ds">Liquid marine collagen sachets, an easy daily ritual</div></div><span class="st">Coming soon</span></div>
+      <div class="bfw-item"><div><div class="nm">NeoCell Marine Collagen + Hyaluronic Acid</div><div class="ds">Marine collagen paired with hyaluronic acid, in capsules</div></div><span class="st">Coming soon</span></div>
+      <div class="bfw-item"><div><div class="nm">YOUR Zooki Vitamin C — Citrus Orange</div><div class="ds">Liposomal vitamin C in daily sachets, chosen for absorption</div></div><span class="st">Coming soon</span></div>
+      <div class="bfw-item"><div><div class="nm">NeoCell Super Collagen Peptides Powder</div><div class="ds">Unflavoured types 1 &amp; 3 collagen to stir into anything</div></div><span class="st">Coming soon</span></div>
+      <div class="bfw-item"><div><div class="nm">Life Extension Complete B-Complex</div><div class="ds">Active-form B vitamins for a considered daily multi</div></div><span class="st">Coming soon</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDER -->
+<section class="founder">
+  <div class="wrap reveal">
+    <blockquote>“I built SkinVault because I was tired of watching people pay to guess. <em>This is the shelf I wish I’d had.</em>”</blockquote>
+    <div class="who">— Chi, Founder</div>
+  </div>
+</section>
+
+<!-- JOURNAL -->
+<section class="sec-light" id="journal">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="kicker">The Journal · Skin notes</div>
+      <h2>Ingredient breakdowns, <em>honest advice</em></h2>
+      <p class="lede">And the occasional myth put to rest — written for skin like yours.</p>
+    </div>
+    <div class="j-grid reveal">
+      <article class="j-card">
+        <div class="j-chip">Concerns</div>
+        <h3>Why dark spots hit deeper skin harder — and the ingredients that actually fade them</h3>
+        <p>Post-inflammatory hyperpigmentation in plain terms, and the actives worth your money.</p>
+        <a class="inline-link" href="journal.html">Read <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="j-card">
+        <div class="j-chip">Myths</div>
+        <h3>SPF on melanin-rich skin: no, you’re not exempt</h3>
+        <p>The myth, the grey-cast problem, and the formulas that solve both.</p>
+        <a class="inline-link" href="journal.html">Read <span aria-hidden="true">→</span></a>
+      </article>
+      <article class="j-card">
+        <div class="j-chip">Ingredients</div>
+        <h3>PDRN, explained: the “salmon” ingredient behind glass skin</h3>
+        <p>What it is, what it does for skin, and where to start in the vault.</p>
+        <a class="inline-link" href="journal.html">Read <span aria-hidden="true">→</span></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- EMAIL BAND -->
+<section class="foot-band sec-dark">
+  <div class="wrap reveal">
+    <div class="kicker" style="justify-content:center">Skin notes, once a fortnight</div>
+    <h2>Ingredient breakdowns, routine builds and <em>first access</em> to restocks</h2>
+    <p class="lede">No noise.</p>
+    <form class="capture" onsubmit="event.preventDefault();this.querySelector('input').value='';">
+      <input type="email" required placeholder="Email address" aria-label="Email address">
+      <button class="btn btn-gold" type="submit">Join the list</button>
+    </form>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div class="f-brand">
+        <a href="#" class="brand">SKINVAULT <em>by Chi</em></a>
+        <p>Curated skincare for melanin-rich skin.</p>
+      </div>
+      <div class="f-col">
+        <h5>Shop</h5>
+        <ul>
+          <li><a href="shop.html">All products</a></li>
+          <li><a href="concerns.html">Shop by concern</a></li>
+          <li><a href="bundles.html">Bundles</a></li>
+          <li><a href="beauty-from-within.html">Beauty from within</a></li>
+          <li><a href="#shop">Best sellers</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>Learn</h5>
+        <ul>
+          <li><a href="journal.html">The Journal</a></li>
+          <li><a href="about.html#standard">Our vetting standard</a></li>
+          <li><a href="concerns.html">Find my routine</a></li>
+          <li><a href="contact.html#faq">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="f-col">
+        <h5>SkinVault</h5>
+        <ul>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="contact.html#faq">Delivery</a></li>
+          <li><a href="contact.html#faq">Returns</a></li>
+          <li><a href="#">Privacy · Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="f-legal">
+      <span>© SkinVault by Chi. All rights reserved.</span>
+      <span>Ingestible range listed for information only, pending NAFDAC food-supplement registration.</span>
+    </div>
+  </div>
+</footer>
+
+</main>
+<a class="wa-fab" href="https://wa.me/2340000000000" target="_blank" rel="noopener" data-event="whatsapp_tap" aria-label="Chat with us on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.6-6.1c-.3-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1-.2.3-.7.8-.8 1-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-2-1.2 7.4 7.4 0 0 1-1.4-1.7c-.1-.3 0-.4.1-.5l.4-.5c.1-.2.2-.3.3-.5v-.5c0-.1-.6-1.4-.8-1.9-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3a2.9 2.9 0 0 0-.9 2.2c0 1.3.9 2.5 1.1 2.7.1.2 1.9 2.9 4.6 4a15 15 0 0 0 1.5.6c.6.2 1.2.2 1.7.1.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2 0-.1-.2-.2-.5-.3Z"/></svg>
+  Chat with us
+</a>
+
+<script>
+// Scroll reveal
+const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// Mobile menu
+const t=document.querySelector('.nav-toggle');
+if(t)t.addEventListener('click',()=>{const l=document.querySelector('.nav-links');
+  l.style.display=l.style.display==='flex'?'none':'flex';
+  Object.assign(l.style,{flexDirection:'column',position:'absolute',top:'74px',left:0,right:0,background:'#1A1A1A',padding:'24px clamp(20px,4vw,56px)',borderBottom:'1px solid rgba(201,168,76,.28)',zIndex:80});});
+// Shop filters
+const grid=document.getElementById('shop-grid');
+if(grid){
+  const q=document.getElementById('f-q'),g=document.getElementById('f-group'),
+        tr=document.getElementById('f-tier'),am=document.getElementById('f-ampm'),
+        count=document.getElementById('f-count'),empty=document.getElementById('f-empty');
+  const cards=[...grid.querySelectorAll('.p-card')];
+  const params=new URLSearchParams(location.search);
+  if(params.get('q'))q.value=params.get('q');
+  function apply(){
+    const term=q.value.trim().toLowerCase();let n=0;
+    cards.forEach(c=>{
+      const ok=(!term||c.dataset.name.includes(term))
+        &&(!g.value||c.dataset.group===g.value)
+        &&(!tr.value||c.dataset.tier===tr.value)
+        &&(!am.value||c.dataset.ampm.includes(am.value));
+      c.style.display=ok?'':'none';if(ok)n++;});
+    count.textContent=n+' of '+cards.length+' products';
+    empty.hidden=n>0;
+  }
+  [q,g,tr,am].forEach(el=>el.addEventListener('input',apply));
+  apply();
+}
+// aria on menu toggle
+if(t){t.setAttribute('aria-expanded','false');t.addEventListener('click',()=>t.setAttribute('aria-expanded',t.getAttribute('aria-expanded')==='false'?'true':'false'));}
+// demo cart + toast
+let cartN=0;
+const cartLink=document.querySelector('.nav-utils .cart');
+const toast=document.createElement('div');toast.className='toast';toast.setAttribute('role','status');document.body.appendChild(toast);
+let toastT;
+function say(msg){toast.textContent=msg;toast.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>toast.classList.remove('show'),2200);}
+document.addEventListener('click',e=>{
+  const b=e.target.closest('button.add');
+  if(!b)return;
+  if(b.classList.contains('notify-btn')){
+    const cap=document.querySelector('.capture input');
+    if(cap){cap.scrollIntoView({behavior:'smooth',block:'center'});cap.focus({preventScroll:true});say('Join the list — one email at launch');}
+    return;
+  }
+  cartN++;if(cartLink)cartLink.textContent='Cart ('+cartN+')';
+  say('Added to cart');
+});
+
+</script>
+</body>
+</html>
