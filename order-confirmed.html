@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Status | SkinVault by Chi</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/skinvault.css">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body style="background:#FBF9F4;color:#211E1A">
+<main id="main" style="max-width:760px;margin:0 auto;padding:60px clamp(20px,4vw,56px) 100px">
+  <div id="st-kick" style="font-family:'DM Mono',monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8a7638;margin-bottom:16px">Checking your payment…</div>
+  <h1 id="st-title" style="font-size:clamp(34px,4.5vw,52px);font-weight:500;margin-bottom:18px">One moment</h1>
+  <p id="st-body" style="font-size:19px;color:#6E6656;max-width:560px">We're confirming your order with Paystack.</p>
+  <div id="st-order" style="margin-top:34px"></div>
+  <p style="margin-top:44px"><a href="shop.html" style="font-family:'DM Mono',monospace;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#8a7638;border-bottom:1px solid #8a7638;padding-bottom:3px">Back to the vault</a></p>
+</main>
+<script src="assets/cart.js"></script>
+<script>
+(function(){
+  var ref=new URLSearchParams(location.search).get('ref');
+  var kick=document.getElementById('st-kick'),title=document.getElementById('st-title'),body=document.getElementById('st-body'),box=document.getElementById('st-order');
+  if(!ref){kick.textContent='Order status';title.textContent='No order reference found';body.textContent='If you just paid, check the link in your Paystack receipt email.';return;}
+  fetch('/api/order-status?ref='+encodeURIComponent(ref)).then(function(r){return r.json()}).then(function(d){
+    if(d.status==='success'){
+      SVCart.clear();
+      kick.textContent='Order '+ref;
+      title.innerHTML='Thank you — it's <em style="font-style:italic;color:#9a7f35">yours.</em>';
+      body.textContent='Payment received. We'll message you on WhatsApp to confirm delivery details. A Paystack receipt is on its way to your email.';
+      if(d.order&&d.order.items){
+        box.innerHTML='<div style="border:1px solid rgba(33,30,26,.14);background:#fff;padding:24px">'+
+          d.order.items.map(function(i){return '<div style="display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed rgba(33,30,26,.12)"><span>'+i.q+'× '+String(i.n).replace(/</g,'&lt;')+'</span><span style="font-family:DM Mono,monospace;font-size:12.5px">₦'+(i.u*i.q).toLocaleString()+'</span></div>'}).join('')+
+          '<div style="display:flex;justify-content:space-between;font-family:DM Mono,monospace;font-size:13px;padding:10px 0 2px"><span>Delivery ('+(d.order.customer&&d.order.customer.zone||'')+')</span><span>'+(d.order.delivery===0?'Free':'₦'+Number(d.order.delivery).toLocaleString())+'</span></div>'+
+          '<div style="display:flex;justify-content:space-between;font-family:DM Mono,monospace;font-size:15px;padding:8px 0;border-top:1px solid rgba(33,30,26,.2);margin-top:6px"><strong>Total paid</strong><strong>₦'+Number(d.amount||d.order.total).toLocaleString()+'</strong></div></div>';
+      }
+    }else if(d.status){
+      kick.textContent='Order '+ref;
+      title.textContent='Payment not completed';
+      body.textContent='Paystack reports this payment as "'+d.status+'". Nothing has been charged if the payment didn't go through — your cart is saved, so you can try again from checkout.';
+    }else{
+      kick.textContent='Order status';
+      title.textContent='We couldn't check that just now';
+      body.textContent=d.error||'Please refresh in a moment, or message us with your reference: '+ref;
+    }
+  }).catch(function(){
+    kick.textContent='Order status';title.textContent='We couldn't check that just now';
+    body.textContent='Please refresh in a moment, or message us with your reference: '+ref;
+  });
+})();
+</script>
+</body>
+</html>

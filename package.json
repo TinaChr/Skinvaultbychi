@@ -1,0 +1,7 @@
+{
+  "name": "skinvault-by-chi",
+  "private": true,
+  "version": "1.0.0",
+  "description": "SkinVault by Chi - storefront + serverless backend (Paystack)",
+  "engines": { "node": ">=18" }
+}
