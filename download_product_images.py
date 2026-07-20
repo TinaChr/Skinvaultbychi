@@ -33,8 +33,15 @@ HEADERS = {"User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
 
 os.makedirs(OUTDIR, exist_ok=True)
 
-def get_hyperlink(cell):
-    return cell.hyperlink.target if cell and cell.hyperlink else None
+def get_url(cell):
+    if cell is None:
+        return None
+    if cell.hyperlink:
+        return cell.hyperlink.target
+    if isinstance(cell.value, str):
+        value = cell.value.strip()
+        return value or None
+    return None
 
 def find_og_image(page_url):
     """Fetch a product page and pull the official product image URL."""
@@ -44,15 +51,21 @@ def find_og_image(page_url):
     except Exception as e:
         return None, f"page fetch failed ({e})"
     html = r.text
-    m = re.search(r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)', html)
-    if not m:
-        m = re.search(r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']', html)
-    if m:
-        url = m.group(1)
-        if url.startswith("//"): url = "https:" + url
-        return url, None
+    for pattern in (
+        r'<meta[^>]+property=["\']og:image["\'][^>]+content=["\']([^"\']+)',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+property=["\']og:image["\']',
+        r'<meta[^>]+property=["\']og:image:secure_url["\'][^>]+content=["\']([^"\']+)',
+        r'<meta[^>]+name=["\']twitter:image["\'][^>]+content=["\']([^"\']+)',
+        r'<meta[^>]+content=["\']([^"\']+)["\'][^>]+name=["\']twitter:image["\']',
+    ):
+        m = re.search(pattern, html, re.IGNORECASE)
+        if m:
+            url = m.group(1).strip()
+            if url.startswith("//"):
+                url = "https:" + url
+            return url, None
     # Shopify fallback: first product image in JSON-LD or cdn.shopify link
-    m = re.search(r'https://cdn\.shopify\.com/[^"\'\s\\]+\.(?:jpg|jpeg|png|webp)[^"\'\s\\]*', html)
+    m = re.search(r'https://cdn\.shopify\.com/[^"\'\s\\]+\.(?:jpg|jpeg|png|webp)[^"\'\s\\]*', html, re.IGNORECASE)
     if m:
         return m.group(0), None
     return None, "no og:image found on page"
@@ -81,8 +94,8 @@ def main():
         if os.path.exists(dest):
             skipped += 1
             continue
-        img_url = get_hyperlink(row[9] if len(row) > 9 else None)   # col J: Official Image URL
-        page_url = get_hyperlink(row[8] if len(row) > 8 else None)  # col I: Official Product Page
+        img_url = get_url(row[9] if len(row) > 9 else None)   # col J: Official Image URL
+        page_url = get_url(row[8] if len(row) > 8 else None)  # col I: Official Product Page
         err = None
         if not img_url and page_url:
             img_url, err = find_og_image(page_url)
