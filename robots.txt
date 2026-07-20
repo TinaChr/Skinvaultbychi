@@ -1,0 +1,8 @@
+# SkinVault by Chi
+User-agent: *
+Allow: /
+Disallow: /checkout
+Disallow: /order-confirmed
+Disallow: /api/
+
+Sitemap: https://skinvaultbychi.com/sitemap.xml
